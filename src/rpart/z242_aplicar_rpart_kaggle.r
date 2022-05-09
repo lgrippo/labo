@@ -8,14 +8,15 @@ require("rpart.plot")
 
 #Aqui debe cambiar los parametros por los que desea probar
 
-param_basicos  <- list( "cp"=          -1,  #complejidad minima
-                        "minsplit"=   300,     #minima cantidad de registros en un nodo para hacer el split
-                        "minbucket"=  150,     #minima cantidad de registros en una hoja
-                        "maxdepth"=     6 )    #profundidad máxima del arbol
+
+param_basicos  <- list( "cp"=          -0.5,  #complejidad minima
+                        "minsplit"=   6000,     #minima cantidad de registros en un nodo para hacer el split
+                        "minbucket"=  250,     #minima cantidad de registros en una hoja
+                        "maxdepth"=     5)    #profundidad máxima del arbol
 
 
 #Aqui se debe poner la carpeta de SU computadora local
-setwd("D:\\gdrive\\Austral2022R\\")  #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo los datos de 202011 que es donde voy a ENTRENAR el modelo
 dtrain  <- fread("./datasets/paquete_premium_202011.csv")
@@ -52,9 +53,10 @@ entrega  <- dapply[   , list(numero_de_cliente, Predicted) ] #genero la salida
 
 #genero el archivo para Kaggle
 #creo la carpeta donde va el experimento
-dir.create( "./labo/exp/", showWarnings = FALSE  )
-dir.create( "./labo/exp/KA2022/", showWarnings = FALSE  )
+#dir.create( "./labo/exp/", showWarnings = FALSE  )
+dir.create( "./exp/KA2022/", showWarnings = FALSE  )
 
 fwrite( entrega, 
-        file= "./labo/exp/KA2022/K242_001.csv", 
+        file= "./exp/KA2022/K242_015.csv", 
         sep= "," )
+

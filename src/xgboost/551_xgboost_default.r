@@ -8,7 +8,7 @@ require("data.table")
 require("xgboost")
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("D:\\gdrive\\Austral2022R\\")   #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")  #Establezco el Working Directory
 
 #cargo el dataset donde voy a entrenar
 dataset  <- fread("./datasets/paquete_premium_202011.csv", stringsAsFactors= TRUE)
@@ -43,9 +43,9 @@ prediccion  <- predict( modelo,
 entrega  <- as.data.table( list( "numero_de_cliente"= dapply[  , numero_de_cliente],
                                  "Predicted"= prediccion > 1/60)  ) #genero la salida
 
-dir.create( "./labo/exp/",  showWarnings = FALSE ) 
-dir.create( "./labo/exp/KA2551/", showWarnings = FALSE )
-archivo_salida  <- "./labo/exp/KA2551/KA_551_001.csv"
+#dir.create( "./labo/exp/",  showWarnings = FALSE ) 
+dir.create( "./exp/KA2551/", showWarnings = FALSE )
+archivo_salida  <- "./exp/KA2551/KA_551_001.csv"
 
 #genero el archivo para Kaggle
 fwrite( entrega, 

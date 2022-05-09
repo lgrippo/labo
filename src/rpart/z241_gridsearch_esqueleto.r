@@ -8,7 +8,7 @@ require("data.table")
 require("rpart")
 require("parallel")
 
-ksemillas  <- c(102191, 200177, 410551, 552581, 892237) #reemplazar por las propias semillas
+ksemillas  <- c(386299, 596293, 751853, 829613, 999959 ) #reemplazar por las propias semillas
 
 #------------------------------------------------------------------------------
 #particionar agrega una columna llamada fold a un dataset que consiste en una particion estratificada segun agrupa
@@ -74,7 +74,7 @@ ArbolesMontecarlo  <- function( semillas, param_basicos )
 #------------------------------------------------------------------------------
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("D:\\gdrive\\Austral2022R\\")   #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo los datos
 dataset  <- fread("./datasets/paquete_premium_202011.csv")
@@ -83,31 +83,34 @@ dataset  <- fread("./datasets/paquete_premium_202011.csv")
 #genero el archivo para Kaggle
 #creo la carpeta donde va el experimento
 # HT  representa  Hiperparameter Tuning
-dir.create( "./labo/exp/",  showWarnings = FALSE ) 
-dir.create( "./labo/exp/HT2020/", showWarnings = FALSE )
-archivo_salida  <- "./labo/exp/HT2020/gridsearch.txt"
+#dir.create( "./labo/exp/",  showWarnings = FALSE ) 
+dir.create( "./exp/HT2020/", showWarnings = FALSE )
+archivo_salida  <- "./exp/HT2020/gridsearch.txt"
 
 #Escribo los titulos al archivo donde van a quedar los resultados
 #atencion que si ya existe el archivo, esta instruccion LO SOBREESCRIBE, y lo que estaba antes se pierde
 #la forma que no suceda lo anterior es con append=TRUE
 cat( file=archivo_salida,
      sep= "",
+     "vmax_cp", "\t",
      "max_depth", "\t",
+     "vmax_minbucket", "\t",
      "min_split", "\t",
      "ganancia_promedio", "\n")
 
 
 #itero por los loops anidados para cada hiperparametro
-
-for( vmax_depth  in  c( 4, 6, 8, 10, 12, 14 )  )
+for( vmax_cp  in  c( -1, -0.5, -0.3, 0, 0.5, 1  )  )
+for( vmax_minbucket  in  c( 250, 150, 100, 76, 26, 16 )  )
+for( vmax_depth  in  c( 3, 5, 6, 9, 11, 12 )  )
 {
-for( vmin_split  in  c( 1000, 800, 600, 400, 200, 100, 50, 20, 10 )  )
+for( vmin_split  in  c( 500, 300, 200, 150, 50, 30)  )
 {
 
   #notar como se agrega
-  param_basicos  <- list( "cp"=         -0.5,       #complejidad minima
+  param_basicos  <- list( "cp"=         vmax_cp,        #complejidad minima
                           "minsplit"=  vmin_split,  #minima cantidad de registros en un nodo para hacer el split
-                          "minbucket"=  5,          #minima cantidad de registros en una hoja
+                          "minbucket"=  vmax_minbucket,          #minima cantidad de registros en una hoja
                           "maxdepth"=  vmax_depth ) #profundidad máxima del arbol
 
   #Un solo llamado, con la semilla 17
@@ -117,7 +120,9 @@ for( vmin_split  in  c( 1000, 800, 600, 400, 200, 100, 50, 20, 10 )  )
   cat(  file=archivo_salida,
         append= TRUE,
         sep= "",
+        vmax_cp, "\t",
         vmax_depth, "\t",
+        vmax_minbucket, "\t",
         vmin_split, "\t",
         ganancia_promedio, "\n"  )
 

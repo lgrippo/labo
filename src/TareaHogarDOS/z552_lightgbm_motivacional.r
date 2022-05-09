@@ -18,10 +18,10 @@ require("data.table")
 require("lightgbm")
 
 
-ksemilla  <- 102191  #poner aqui la PRIMERA de sus cinco semillas
+ksemilla  <- 386299  #poner aqui la PRIMERA de sus cinco semillas
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("D:\\gdrive\\Austral2022R\\")   #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo el dataset donde voy a entrenar
 dataset  <- fread("./datasets/paquete_premium_202011.csv", stringsAsFactors= TRUE)
@@ -64,15 +64,15 @@ prediccion  <- predict( modelo,
 
 
 #Genero la entrega para Kaggle
-#Atencion yaNO corto por  1/60,  sino que busque el punto de corte optimo
+#Atencion ya NO corto por  1/60,  sino que busque el punto de corte optimo
 entrega  <- as.data.table( list( "numero_de_cliente"= dapply[  , numero_de_cliente],
                                  "Predicted"= as.integer(prediccion > 0.023)   ) ) #ATENCION  no es  1/60   0.0225!!!
 
 #guardo el resultado
 #creo las carpetas
-dir.create( "./labo/exp/",  showWarnings = FALSE ) 
-dir.create( "./labo/exp/KA5520/", showWarnings = FALSE )
-setwd( "./labo/exp/KA5520/" )
+#dir.create( "./labo/exp/",  showWarnings = FALSE ) 
+dir.create( "./exp/KA5520/", showWarnings = FALSE )
+setwd( "./exp/KA5520/" )
 
 archivo_salida  <- "KA_552_001.csv"
 

@@ -28,7 +28,7 @@ hs <- makeParamSet(
          makeNumericParam("prob_corte",       lower= 1/120 , upper=  1/20)     #pruebo  cortar con otras probabilidades
         )
 
-ksemilla_azar  <- 102191  #Aqui poner la propia semilla
+ksemilla_azar  <- 596293 #Aqui poner la propia semilla
 
 #------------------------------------------------------------------------------
 #graba a un archivo los componentes de lista
@@ -136,16 +136,16 @@ EstimarGanancia_xgboost  <- function( x )
 #Aqui empieza el programa
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("D:\\gdrive\\Austral2022R\\")   #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo el dataset donde voy a entrenar el modelo
 dataset  <- fread("./datasets/paquete_premium_202011.csv")
 
 #creo la carpeta donde va el experimento
 # HT  representa  Hiperparameter Tuning
-dir.create( "./labo/exp/",  showWarnings = FALSE ) 
-dir.create( "./labo/exp/HT5630/", showWarnings = FALSE )
-setwd("D:\\gdrive\\Austral2022R\\labo\\exp\\HT5630\\")   #Establezco el Working Directory DEL EXPERIMENTO
+#dir.create( "./labo/exp/",  showWarnings = FALSE ) 
+dir.create( "./exp/HT5630/", showWarnings = FALSE )
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo/exp/HT5630/")   #Establezco el Working Directory DEL EXPERIMENTO
 
 
 #en estos archivos quedan los resultados

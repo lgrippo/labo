@@ -26,7 +26,7 @@ hs  <- makeParamSet(
           makeIntegerParam("maxdepth" , lower=  3L  , upper=   20L),
           forbidden = quote( minbucket > 0.5*minsplit ) )             # minbuket NO PUEDE ser mayor que la mitad de minsplit
 
-ksemilla_azar  <- 102191   #cambiar por la primer semilla
+ksemilla_azar  <- 596293   #cambiar por la primer semilla
 
 #------------------------------------------------------------------------------
 #graba a un archivo los componentes de lista
@@ -140,7 +140,7 @@ EstimarGanancia  <- function( x )
 #------------------------------------------------------------------------------
 #Aqui empieza el programa
 
-setwd( "D:\\gdrive\\Austral2022R\\" )
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo el dataset
 dataset  <- fread("./datasets/paquete_premium_202011.csv")   #donde entreno
@@ -148,9 +148,9 @@ dataset  <- fread("./datasets/paquete_premium_202011.csv")   #donde entreno
 
 #creo la carpeta donde va el experimento
 # HT  representa  Hiperparameter Tuning
-dir.create( "./labo/exp/",  showWarnings = FALSE ) 
-dir.create( "./labo/exp/HT3210/", showWarnings = FALSE )
-setwd("D:\\gdrive\\Austral2022R\\labo\\exp\\HT3210\\")   #Establezco el Working Directory DEL EXPERIMENTO
+#dir.create( "./labo/exp/",  showWarnings = FALSE ) 
+dir.create( "./exp/HT3210/", showWarnings = FALSE )
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo/exp/HT3210")   #Establezco el Working Directory DEL EXPERIMENTO
 
 
 archivo_log  <- "HT321.txt"
@@ -193,4 +193,5 @@ surr.km  <- makeLearner("regr.km", predict.type= "se", covtype= "matern3_2", con
 if( !file.exists( archivo_BO ) ) {
   run  <- mbo(obj.fun, learner = surr.km, control = ctrl)
 } else  run  <- mboContinue( archivo_BO )   #retomo en caso que ya exista
+
 

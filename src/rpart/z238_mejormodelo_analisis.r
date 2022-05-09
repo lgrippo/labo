@@ -4,7 +4,7 @@
 
 rm( list=ls() )  #Borro todos los objetos
 gc()   #Garbage Collection
-
+ins
 require("data.table")
 require("rpart")
 require("parallel")
@@ -74,7 +74,7 @@ ArbolesMontecarlo  <- function( semillas,  param_basicos )
 #------------------------------------------------------------------------------
 
 #Aqui se debe poner la carpeta de la computadora local
-setwd("/media/Shared/gustavo/b1/")   #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo el dataset
 dataset  <- fread("./datasets/paquete_premium_202011.csv")

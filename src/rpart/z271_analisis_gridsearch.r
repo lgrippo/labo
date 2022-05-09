@@ -7,10 +7,10 @@ require("rpart")
 require("rpart.plot")
 
 #Aqui se debe poner la carpeta de SU computadora local
-setwd("D:\\gdrive\\Austral2022R\\")  #Establezco el Working Directory
+setwd("C:/Users/Ale y Luis/Documents/3er Semestre2022/lab_de_implementI/labo")   #Establezco el Working Directory
 
 #cargo la salida del Grid Seach, verifique que corresponda a la carpeta donde dejó el resultado
-dtrain  <- fread("./labo/exp/HT2020/gridsearch.txt")
+dtrain  <- fread("./exp/HT2020/gridsearch.txt")
 
 #genero el modelo,  aqui se construye el arbol
 #este sera un arbol de REGRESION ya que la variable objetivo, ganancia_promedio,  es una variable continua
@@ -26,9 +26,9 @@ modelo  <- rpart("ganancia_promedio ~ .",  #quiero predecir clase_ternaria a par
 #grafico el arbol
 
 #primero creo la carpeta a donde voy a guardar el dibujo del arbol
-dir.create( "./labo/exp/",  showWarnings = FALSE ) 
-dir.create( "./labo/exp/ST2030/", showWarnings = FALSE )
-archivo_salida  <- "./labo/exp/ST2030/arbol_analisis_gridsearch.pdf"
+#dir.create( "./labo/exp/",  showWarnings = FALSE ) 
+dir.create( "./exp/ST2030/", showWarnings = FALSE )
+archivo_salida  <- "./exp/ST2030/arbol_analisis_gridsearch.pdf"
 
 #finalmente, genero el grafico guardandolo en un archivo pdf
 pdf( archivo_salida, paper="a4r" )
