@@ -7,7 +7,7 @@ googlecloud:
 
 
 experiment:
-  script: "src/completo/z912_FE_desborde - 001.r"
+  script: "src/completo/z912_FE_desborde - 002.r"
   restart: TRUE
   name: "exp"
   requires: [ "DT0001" ]
@@ -40,6 +40,8 @@ param:
   canaritosratio: [ 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 ]
 
   tony:  FALSE
+  
+  MenosesMas: TRUE
 
 
   files:
