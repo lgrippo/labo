@@ -7,7 +7,7 @@ googlecloud:
 
 
 experiment:
-  script: "src/completo/z912_FE_desborde - 001.r"
+  script: "src/completo/z912_FE_desborde.r" #01
   restart: TRUE
   name: "exp"
   requires: [ "DT0001" ]
