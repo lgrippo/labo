@@ -264,7 +264,7 @@ dataset[ , mtotal_comisiones       := rowSums( cbind( mcomisiones_mantenimiento,
 dataset[ , ctotal_crx              := rowSums( cbind( ctarjeta_debito_trx, ctarjeta_visa_trx, ctarjeta_master_trx,
                                                   ) , na.rm=TRUE ) ]  
 
-#Ratios y m√°s
+#Ratios y m·s
 
 dataset[ , rmrentabilidad         := mrentabilidad  / mrentabilidad_annual ]
 dataset[ , rmcta_cte_adic_saldo   := mcuenta_corriente_adicional  / mcuentas_saldo ]
@@ -281,6 +281,7 @@ dataset[ , rmcomisiones_payroll   := mtotal_comisiones   / mtotal_payroll ]
 dataset[ , rmcomisiones_consumos  := mtotal_comisiones   / mtotal_consumos ]
 
 
+  
   #valvula de seguridad para evitar valores infinitos
   #paso los infinitos a NULOS
   infinitos      <- lapply(names(dataset),function(.name) dataset[ , sum(is.infinite(get(.name)))])
