@@ -16,8 +16,7 @@ require("data.table")
 require("Rcpp")
 require("rlist")
 require("yaml")
-require("caret")
-require("dplyr")
+
 require("lightgbm")
 
 source( "~/labo/src/lib/exp_lib.r" )
@@ -250,39 +249,36 @@ AgregarVariables  <- function( dataset )
 
   #Aqui debe usted agregar sus propias nuevas variables
   
-#Combino
-dataset[ , mtotal_consumos          := rowSums( cbind( mtarjeta_visa_consumo, mtarjeta_master_consumo,
-                                                      mcuenta_debitos_automaticos, mtarjeta_visa_consumo, 
-                                                      mttarjeta_master_debitos_automaticos,
-                                                      mpagodeservicios, mpagomiscuentas), na.rm=TRUE ) ]
-dataset[ , mtotal_prestamos        := rowSums( cbind( mprestamos_personales, mprestamos_prendarios, mprestamos_hipotecarios) , na.rm=TRUE ) ]
-dataset[ , mtotal_inversiones      := rowSums( cbind( mplazo_fijo_dolares, mplazo_fijo_pesos,
-                                                           minversion1_pesos, minversion1_dolares,
-                                                           minversion2) , na.rm=TRUE ) ]
-dataset[ , mtotal_payroll          := rowSums( cbind( mpayroll, mpayroll2) , na.rm=TRUE ) ]
-dataset[ , mtotal_descuentos       := rowSums( cbind( mtarjeta_visa_descuentos, mtarjeta_master_descuentos) , na.rm=TRUE ) ]  
-dataset[ , mtotal_comisiones       := rowSums( cbind( mcomisiones_mantenimiento, mcomisiones_otras) , na.rm=TRUE ) ]  
-dataset[ , ctotal_crx              := rowSums( cbind( ctarjeta_debito_trx, ctarjeta_visa_trx, ctarjeta_master_trx,
-                                                  ) , na.rm=TRUE ) ]  
-
-#Ratios y más
-
-dataset[ , rmrentabilidad         := mrentabilidad  / mrentabilidad_annual ]
-dataset[ , rmcta_cte_adic_saldo   := mcuenta_corriente_adicional  / mcuentas_saldo ]
-dataset[ , rmcta_cte_saldo        := mcuenta_corriente / mcuentas_saldo ]
-dataset[ , rmcaja_ahorro_saldo    := mcaja_ahorro  / mcuentas_saldo ]
-dataset[ , rmcaja_ahorro_adic_saldo:= mcaja_ahorro_adicional  / mcuentas_saldo ]
-dataset[ , rmcaja_ahorro_dolares_saldo:= mcaja_ahorro_dolares / mcuentas_saldo]
-dataset[ , rmdescubierto_preacordado_saldo:=mdescubierto_preacordado  / mcuentas_saldo ]
-dataset[ , rmtota_consumo_payroll   := mtotal_consumos / mtotal_payroll  ]
-dataset[ , rmprestamo_inversion   := mtotal_prestamos / mtotal_prestamos ]
-dataset[ , rmdescuentos_consumos  := mtotal_descuentos /  mtotal_consumos]
-dataset[ , rmcomisiones_saldo     := mtotal_comisiones   / mcuentas_saldo ]
-dataset[ , rmcomisiones_payroll   := mtotal_comisiones   / mtotal_payroll ]
-dataset[ , rmcomisiones_consumos  := mtotal_comisiones   / mtotal_consumos ]
-
-
-
+  #Combino
+  dataset[ , mtotal_consumos          := rowSums( cbind( mtarjeta_visa_consumo, mtarjeta_master_consumo,
+                                                         mcuenta_debitos_automaticos, mtarjeta_visa_consumo, 
+                                                         mttarjeta_master_debitos_automaticos,
+                                                         mpagodeservicios, mpagomiscuentas), na.rm=TRUE )]
+  dataset[ , mtotal_prestamos        := rowSums( cbind( mprestamos_personales, mprestamos_prendarios, mprestamos_hipotecarios) , na.rm=TRUE ) ]
+  dataset[ , mtotal_inversiones      := rowSums( cbind( mplazo_fijo_dolares, mplazo_fijo_pesos,
+                                                        minversion1_pesos, minversion1_dolares,
+                                                        minversion2) , na.rm=TRUE ) ]
+  dataset[ , mtotal_payroll          := rowSums( cbind( mpayroll, mpayroll2) , na.rm=TRUE ) ]
+  dataset[ , mtotal_descuentos       := rowSums( cbind( mtarjeta_visa_descuentos, mtarjeta_master_descuentos) , na.rm=TRUE ) ]  
+  dataset[ , mtotal_comisiones       := rowSums( cbind( mcomisiones_mantenimiento, mcomisiones_otras) , na.rm=TRUE ) ]  
+  dataset[ , ctotal_crx              := rowSums( cbind( ctarjeta_debito_trx, ctarjeta_visa_trx, ctarjeta_master_trx) , na.rm=TRUE ) ]  
+  
+  #Ratios y más
+  
+  dataset[ , rmrentabilidad         := mrentabilidad  / mrentabilidad_annual ]
+  dataset[ , rmcta_cte_adic_saldo   := mcuenta_corriente_adicional  / mcuentas_saldo ]
+  dataset[ , rmcta_cte_saldo        := mcuenta_corriente / mcuentas_saldo ]
+  dataset[ , rmcaja_ahorro_saldo    := mcaja_ahorro  / mcuentas_saldo ]
+  dataset[ , rmcaja_ahorro_adic_saldo:= mcaja_ahorro_adicional  / mcuentas_saldo ]
+  dataset[ , rmcaja_ahorro_dolares_saldo:= mcaja_ahorro_dolares / mcuentas_saldo]
+  dataset[ , rmdescubierto_preacordado_saldo:=mdescubierto_preacordado  / mcuentas_saldo ]
+  dataset[ , rmtota_consumo_payroll   := mtotal_consumos / mtotal_payroll  ]
+  dataset[ , rmprestamo_inversion   := mtotal_prestamos / mtotal_prestamos ]
+  dataset[ , rmdescuentos_consumos  := mtotal_descuentos /  mtotal_consumos]
+  dataset[ , rmcomisiones_saldo     := mtotal_comisiones   / mcuentas_saldo ]
+  dataset[ , rmcomisiones_payroll   := mtotal_comisiones   / mtotal_payroll ]
+  dataset[ , rmcomisiones_consumos  := mtotal_comisiones   / mtotal_consumos ]
+  
   
   #valvula de seguridad para evitar valores infinitos
   #paso los infinitos a NULOS
@@ -309,6 +305,8 @@ dataset[ , rmcomisiones_consumos  := mtotal_comisiones   / mtotal_consumos ]
 
   ReportarCampos( dataset )
 }
+
+
 #------------------------------------------------------------------------------
 #esta funcion supone que dataset esta ordenado por   <numero_de_cliente, foto_mes>
 #calcula el lag y el delta lag
@@ -567,20 +565,6 @@ CanaritosImportancia  <- function( canaritos_ratio=0.2 )
   ReportarCampos( dataset )
 }
 #------------------------------------------------------------------------------
-#Elimina las variables - nearZeroVar
-
-MenosesMas <- function(dataset)
-{
-  gc()
-  remove_cols <- nearZeroVar(dataset, names = TRUE, 
-                             freqCut = 2, uniqueCut = 20)
-  
-  dataset <- dataset%>% 
-    select(- remove_cols)
-  
-}
-
-
 #------------------------------------------------------------------------------
 #Aqui empieza el programa
 

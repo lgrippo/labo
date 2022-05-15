@@ -7,24 +7,24 @@ googlecloud:
 
 
 experiment:
-  script: "src/completo/z912_FE_desborde.r" #01
+  script: "src/completo/z912_FE_desborde01.r" #01
   restart: TRUE
   name: "exp"
   requires: [ "DT0001" ]
 
 
 param:
-  dummiesNA: FALSE
-  
-  corregir: TRUE  #se se corrige los campos/foto_mes  MALOS
+  dummiesNA: TRUE
+
+  corregir: TRUE    #se se corrige los campos/foto_mes  MALOS
   variablesdrift: [] #variables que se eliminan porque estan mal en el futuro
   
   variablesmanuales: TRUE
-  
+
   acumulavars: TRUE   #a lo nuevo lo va aplicando
 
   tendenciaYmuchomas: 
-    correr: TRUE    #Great power comes with great responsability
+    correr: TRUE #Great power comes with great responsability
     ventana: 6
     tendencia: TRUE
     minimo:    TRUE
@@ -35,11 +35,12 @@ param:
 
 
   #lags y sus deltas , 6 posiciones
-  lag:   [ TRUE, FALSE, TRUE, FALSE, FALSE, FALSE ]
-  delta: [ TRUE, FALSE, TRUE, FALSE, FALSE, FALSE ]
-  canaritosratio: [ 0.1, 0, 0.3, 0, 0, 0 ]
+  lag:   [ TRUE, FALSE, FALSE, FALSE, FALSE, TRUE ]
+  delta: [ TRUE, FALSE, TRUE, FALSE, FALSE, TRUE ]
+  canaritosratio: [ 0.1, 0, 0, 0, 0, 0.5 ]
 
-  tony:  TRUE
+    tony:  TRUE
+  canaritosimp: 0.3
 
 
   files:
