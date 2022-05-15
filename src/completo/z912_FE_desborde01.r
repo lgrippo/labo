@@ -586,6 +586,13 @@ if( PARAM$corregir )  Corregir( dataset )  #esta linea debe ir DESPUES de  Dummi
 if( PARAM$variablesmanuales )  AgregarVariables( dataset )
 
 
+cols <- copy( setdiff( colnames(dataset), PARAM$const$campos_fijos ) )
+
+if( PARAM$tony) Tony (cols)
+
+if( PARAM$canaritosimp) CanaritosImportancia(canaritos_ratio =  PARAM$canaritosimp)
+
+
 #--------------------------------------
 #Esta primera parte es muuuy  artesanal  y discutible  ya que hay multiples formas de hacerlo
 
